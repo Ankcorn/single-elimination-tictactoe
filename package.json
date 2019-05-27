@@ -1,0 +1,49 @@
+{
+  "name": "single-elimination-tictactoe",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "http-proxy-middleware": "^0.19.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-feather": "^1.1.6",
+    "react-scripts": "3.0.1"
+  },
+  "scripts": {
+    "tailwind:css": "tailwind build src/css/tailwind.src.css -c  tailwind.js -o src/css/tailwind.css",
+    "tailwind:purge": "purgecss --css src/css/tailwind.css --out src/css/ --content src/**/*.js",
+    "start": "yarn tailwind:css && react-scripts start",
+    "build": "yarn tailwind:css && yarn tailwind:purge && react-scripts build",
+    "lint": "eslint",
+    "test": "react-scripts test",
+    "serve": "serve -s build/",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^1.2.0",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.13.0",
+    "react-testing-library": "^7.0.1",
+    "serve": "^11.0.0",
+    "tailwindcss": "^1.0.2"
+  },
+  "proxy": "https://deploy-preview-14--hungry-nobel-797820.netlify.com"
+}

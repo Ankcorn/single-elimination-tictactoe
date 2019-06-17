@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 
+
 function useTicTacToe() {
   const initialState = Array(9).fill(0);
   const initialPlayer = 1;
   const [lastPlayer, setLastPlayer] = useState(initialPlayer);
+
   const winConditions = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8],
     [0, 3, 6], [1, 4, 7], [2, 5, 8],
@@ -15,11 +17,12 @@ function useTicTacToe() {
 
   function resetGame() {
     setGame(initialState);
+    setPlayer(lastPlayer * -1);
     setLastPlayer(lastPlayer * -1);
   }
   function nextMove(position) {
-    setGame([...game].map((el, i) => (i === position ? player : el)));
     setPlayer(player * -1);
+    setGame([...game].map((el, i) => (i === position ? player : el)));
   }
 
   function useWinner(callback, gameState) {
@@ -31,13 +34,14 @@ function useTicTacToe() {
         && gameState[el[1]] !== 0
         && gameState[el[3]] !== 0,
       );
-      if (isWin) {
+      if (isWin || !gameState.includes(0)) {
         resetGame();
-        callback(player);
+        console.log(isWin ? player : '0');
+        callback(isWin ? player : '0');
       }
-    }, [gameState, callback]);
+    }, [gameState]);
   }
-  return [game, nextMove, resetGame, useWinner];
+  return [game, player, nextMove, resetGame, useWinner];
 }
 
 export default useTicTacToe;

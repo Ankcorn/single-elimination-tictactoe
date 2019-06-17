@@ -42,7 +42,11 @@ function App() {
       <div className="flex flex-col">
         <Badge color="green" player={1} won={winners.p1} />
         <Badge color="blue" player={2} won={winners.p2} />
-        <ResetButton onClick={resetGame} />
+        <ResetButton onClick={() => {
+          setWinner({ p1: 0, p2: 0 });
+          resetGame();
+        }}
+        />
       </div>
 
     </div>

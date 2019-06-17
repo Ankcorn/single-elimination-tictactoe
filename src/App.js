@@ -38,7 +38,13 @@ function App() {
   }, 50);
 
   return (
-    <div className="flex justify-center items-center w-screen h-screen bg-gray-200 ">
+    <div className="flex justify-around items-center w-screen h-screen bg-gray-200 ">
+      <div className="flex flex-col">
+        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="ai2">
+          AI 2 Code
+          <textarea value={ai2} onChange={e => setAI2(e.target.value)} rows="20" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="ai2" type="text" placeholder="game.indexOf(0)" />
+        </label>
+      </div>
       <Board>
         {game.map((piece, i) => (
           <Square
@@ -58,7 +64,7 @@ function App() {
             setWinner({ p1: 0, p2: 0 });
             resetGame();
           }}
-          text={paused ? 'Play' : 'Pause'}
+          text={paused ? 'Start' : 'Stop'}
         />
         <Button
           onClick={() => {
@@ -68,13 +74,6 @@ function App() {
           }}
           text="Reset"
         />
-      </div>
-      <div className="flex flex-col">
-        <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="ai2">
-          AI 2 Code
-          <textarea value={ai2} onChange={e => setAI2(e.target.value)} rows="5" className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="ai2" type="text" placeholder="game.indexOf(0)" />
-        </label>
-
       </div>
     </div>
   );

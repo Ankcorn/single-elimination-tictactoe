@@ -13,7 +13,7 @@
     "tailwind:css": "tailwind build src/css/tailwind.src.css -c  tailwind.js -o src/css/tailwind.css",
     "tailwind:purge": "purgecss --css src/css/tailwind.css --out src/css/ --content src/**/*.js",
     "start": "yarn tailwind:css && react-scripts start",
-    "build": "yarn tailwind:css && yarn tailwind:purge && react-scripts build",
+    "build": "yarn tailwind:css && react-scripts build",
     "lint": "eslint",
     "test": "react-scripts test",
     "serve": "serve -s build/",

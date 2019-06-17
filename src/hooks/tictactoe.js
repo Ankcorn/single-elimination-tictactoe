@@ -36,7 +36,6 @@ function useTicTacToe() {
       );
       if (isWin || !gameState.includes(0)) {
         resetGame();
-        console.log(isWin ? player : '0');
         callback(isWin ? player : '0');
       }
     }, [gameState]);

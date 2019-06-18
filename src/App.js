@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Menu from 'react-feather/dist/icons/menu';
+import posed, { PoseGroup } from 'react-pose';
 import Board from './components/Board';
 import Square from './components/Square';
 import Button from './components/Button';
@@ -7,6 +8,17 @@ import useTicTacToe from './hooks/tictactoe';
 import useInterval from './hooks/interval';
 import Badge from './components/Badge';
 import logic from './ai/logic';
+
+const Modal = posed.div({
+  enter: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      default: { duration: 300 },
+    },
+  },
+  exit: { opacity: 0, x: -256 },
+});
 
 function App() {
   const [game, player, nextMove, resetGame, useWinner] = useTicTacToe();
@@ -40,11 +52,14 @@ function App() {
   }, 50);
 
   return (
-    <div className="flex flex-col sm:flex-row">
+    <div className="flex flex-col sm:flex-row bg-gray-200">
       {!panelOpen && <button className="fixed m-4" type="button" onClick={() => setPanel(!panelOpen)}><Menu color="#2d3748" /></button>}
-      {panelOpen && (
-      <div className="bg-gray-800 w-screen h-64 sm:w-64 sm:h-screen" />
-      )}
+      <PoseGroup>
+        {panelOpen
+          ? <Modal key={4} className="bg-gray-800 sm:w-64 w-10/12 h-screen fixed sm:relative" /> : null
+        }
+      </PoseGroup>
+
       <div className="flex flex-col sm:flex-row justify-around items-center w-full h-full sm:h-screen bg-gray-200 ">
         <div className="flex flex-col">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="ai2">

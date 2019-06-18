@@ -38,7 +38,7 @@ function useTicTacToe() {
         resetGame();
         callback(isWin ? player : '0');
       }
-    }, [gameState]);
+    }, [gameState, callback]);
   }
   return [game, player, nextMove, resetGame, useWinner];
 }

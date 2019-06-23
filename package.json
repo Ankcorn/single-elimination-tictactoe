@@ -5,6 +5,8 @@
   "dependencies": {
     "data-mocks": "https://github.com/Ankcorn/data-mocks.git",
     "data-mocks-temp": "^2.5.9",
+    "dotenv": "^8.0.0",
+    "mongoose": "^5.6.0",
     "netlify-lambda": "^1.4.13",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

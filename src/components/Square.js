@@ -3,7 +3,9 @@ import React from 'react';
 import X from 'react-feather/dist/icons/x';
 import O from 'react-feather/dist/icons/circle';
 
-function Square({ onClick, value, position }) {
+function Square({
+  onClick, value, position, error,
+}) {
   const isEmpty = () => value === 0;
 
   function handleKeyPress(e) {
@@ -18,7 +20,7 @@ function Square({ onClick, value, position }) {
       title={`Square ${position}`}
       onClick={() => isEmpty() && onClick()}
       onKeyPress={handleKeyPress}
-      className="bg-gray-600 text-gray-100 hover:bg-gray-500 w-20 h-20 m-1 rounded shadow-inner-xl flex justify-center items-center"
+      className={`bg-gray-600 ${error ? 'border-red-400 border-4' : ''} text-gray-100 hover:bg-gray-500 w-20 h-20 m-1 rounded shadow-inner-xl flex justify-center items-center`}
     >
       {!isEmpty() && (value === 1 ? (
         <X size={64} strokeWidth={2} />

@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "data-mocks": "https://github.com/Ankcorn/data-mocks.git",
+    "data-mocks-temp": "^2.5.9",
+    "netlify-lambda": "^1.4.13",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-feather": "^1.1.6",
@@ -14,6 +17,8 @@
     "tailwind:purge": "purgecss --css src/css/tailwind.css --out src/css/ --content src/**/*.js",
     "start": "yarn tailwind:css && react-scripts start",
     "build": "yarn tailwind:css && react-scripts build",
+    "start:lambda": "netlify-lambda serve lambda-src",
+    "build:lambda": "netlify-lambda build lambda-src",
     "lint": "eslint",
     "test": "react-scripts test",
     "serve": "serve -s build/",

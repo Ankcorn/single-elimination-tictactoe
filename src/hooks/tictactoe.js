@@ -21,6 +21,7 @@ function useTicTacToe() {
     setLastPlayer(lastPlayer * -1);
   }
   function nextMove(position) {
+    if (game[position] !== 0) throw new Error('That space is already taken');
     setPlayer(player * -1);
     setGame([...game].map((el, i) => (i === position ? player : el)));
   }

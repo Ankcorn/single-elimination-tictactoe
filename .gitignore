@@ -86,6 +86,7 @@ typings/
 
 # production
 /build
+/lambda
 
 # misc
 .DS_Store

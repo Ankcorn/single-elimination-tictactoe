@@ -1,31 +1,23 @@
-import mongoose from 'mongoose';
 
-require('dotenv').config();
+import Lambda from './lambda';
+import loadModel from './models';
 
-const conn = null;
 
-const headers = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'Content-Type',
-};
+exports.handler = function handler(event, context, callback) {
+  const app = new Lambda(event, context, callback, { callbackWaitsForEmptyEventLoop: false });
 
-const statusCode = 200;
 
-exports.handler = async function handler(event, context) {
-  // eslint-disable-next-line no-param-reassign
-  context.callbackWaitsForEmptyEventLoop = false;
-  // We only care to do anything if this is our POST request.
-  if (event.httpMethod !== 'POST') {
-    return {
-      statusCode,
-      headers,
-      body: 'This was not a POST request!',
-    };
-  }
-
-  return {
-    statusCode,
-    headers,
-    body: 'This is not dope',
-  };
+  app.post({ code: 'string', name: 'string' }, async (body, res) => {
+    try {
+      const { AI } = await loadModel();
+      await new AI({ name: body.name, code: body.code }).save();
+      return res.send({
+        statusCode: 200,
+        headers: app.headers,
+        body: 'You saved your AI',
+      });
+    } catch (e) {
+      return app.response(e.message);
+    }
+  });
 };

@@ -1,3 +1,20 @@
+class Response {
+  constructor(response, headers) {
+    this.response = response;
+    this.headers = headers;
+    this.s = 200;
+  }
+
+  status(val) {
+    this.s = val;
+    return this;
+  }
+
+  send(data) {
+    this.response(null, { body: data, statusCode: this.s, headers: this.headers });
+  }
+}
+
 class lambda {
   constructor(event, context, callback, options) {
     this.context = context;
@@ -11,10 +28,6 @@ class lambda {
     this.context.callbackWaitsForEmptyEventLoop = options.callbackWaitsForEmptyEventLoop || true;
   }
 
-  res() {
-    return { send: data => this.response(null, data) };
-  }
-
   post(validation, handler) {
     if (this.event.httpMethod === 'POST') {
       const body = JSON.parse(this.event.body);
@@ -25,7 +38,7 @@ class lambda {
           body: 'input body is invalid',
         });
       }
-      handler(body, this.res());
+      handler(body, new Response(this.response, this.headers));
     }
   }
 }

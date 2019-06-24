@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "concurrently": "^4.1.0",
     "data-mocks": "https://github.com/Ankcorn/data-mocks.git",
     "data-mocks-temp": "^2.5.9",
     "dotenv": "^8.0.0",
@@ -17,8 +18,8 @@
   "scripts": {
     "tailwind:css": "tailwind build src/css/tailwind.src.css -c  tailwind.js -o src/css/tailwind.css",
     "tailwind:purge": "purgecss --css src/css/tailwind.css --out src/css/ --content src/**/*.js",
-    "start": "yarn tailwind:css && react-scripts start",
-    "build": "yarn tailwind:css && react-scripts build",
+    "start": "yarn tailwind:css && concurrently 'yarn start:lambda' 'react-scripts start'",
+    "build": "yarn tailwind:css && yarn build:lambda && react-scripts build",
     "start:lambda": "netlify-lambda serve lambda-src",
     "build:lambda": "netlify-lambda build lambda-src",
     "lint": "eslint",

@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reach/router": "^1.2.1",
+    "axios": "^0.19.0",
     "concurrently": "^4.1.0",
     "data-mocks": "https://github.com/Ankcorn/data-mocks.git",
     "data-mocks-temp": "^2.5.9",
     "dotenv": "^8.0.0",
+    "http-proxy-middleware": "^0.19.1",
     "mongoose": "^5.6.0",
     "netlify-lambda": "^1.4.13",
     "react": "^16.8.6",

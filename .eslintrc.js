@@ -22,6 +22,7 @@ module.exports = {
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "react/no-array-index-key": [0],
-        "react/prop-types": [0]
+        "react/prop-types": [0],
+        "jsx-a11y/label-has-for": [0]
     }
 };

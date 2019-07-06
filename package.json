@@ -4,14 +4,7 @@
   "private": true,
   "dependencies": {
     "@reach/router": "^1.2.1",
-    "axios": "^0.19.0",
-    "concurrently": "^4.1.0",
-    "data-mocks": "https://github.com/Ankcorn/data-mocks.git",
-    "data-mocks-temp": "^2.5.9",
-    "dotenv": "^8.0.0",
-    "http-proxy-middleware": "^0.19.1",
-    "mongoose": "^5.6.0",
-    "netlify-lambda": "^1.4.13",
+    "mongodb-stitch-browser-sdk": "^4.4.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-feather": "^1.1.6",
@@ -21,10 +14,8 @@
   "scripts": {
     "tailwind:css": "tailwind build src/css/tailwind.src.css -c  tailwind.js -o src/css/tailwind.css",
     "tailwind:purge": "purgecss --css src/css/tailwind.css --out src/css/ --content src/**/*.js",
-    "start": "yarn tailwind:css && concurrently 'yarn start:lambda' 'react-scripts start'",
-    "build": "yarn tailwind:css && yarn build:lambda && react-scripts build",
-    "start:lambda": "netlify-lambda serve lambda-src",
-    "build:lambda": "netlify-lambda build lambda-src",
+    "start": "yarn tailwind:css && 'react-scripts start'",
+    "build": "yarn tailwind:css && react-scripts build",
     "lint": "eslint",
     "test": "react-scripts test",
     "serve": "serve -s build/",
@@ -53,7 +44,6 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.13.0",
     "react-testing-library": "^7.0.1",
-    "serve": "^11.0.0",
     "tailwindcss": "^1.0.2"
   },
   "proxy": "https://deploy-preview-14--hungry-nobel-797820.netlify.com"

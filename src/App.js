@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Router } from '@reach/router';
 import {
   Stitch,
@@ -11,24 +11,22 @@ import Create from './pages/CreateAI';
 
 
 const client = Stitch.initializeDefaultAppClient('aivsai-cjsto');
-
 const db = client.getServiceClient(RemoteMongoClient.factory, 'mongodb-atlas').db('vs');
 
-client.auth.loginWithCredential(new AnonymousCredential()).then(user => db.collection('ai').updateOne({ owner_id: client.auth.user.id }, { $set: { number: 42 } }, { upsert: true })).then(() => db.collection('ai').find({ owner_id: client.auth.user.id }, { limit: 100 }).asArray()).then((docs) => {
-  console.log('Found docs', docs);
-  console.log('[MongoDB Stitch] Connected to Stitch');
-})
-  .catch((err) => {
-    console.error(err);
-  });
 
 function App() {
+  const [ai, setAI] = useState(null);
+  useEffect(() => {
+    client.auth.loginWithCredential(new AnonymousCredential()).then(() => {
+      setAI(db.collection('ai'));
+    });
+  }, []);
   return (
     <div className="w-screen h-screen bg-gray-800">
       <Header text="AI vs AI" />
       <Router>
         <Home path="/" />
-        <Create path="/create" />
+        <Create path="/create" ai={ai} />
       </Router>
     </div>
   );

@@ -6,6 +6,7 @@
     "@reach/router": "^1.2.1",
     "mongodb-stitch-browser-sdk": "^4.4.1",
     "react": "^16.8.6",
+    "react-ace": "^7.0.2",
     "react-dom": "^16.8.6",
     "react-feather": "^1.1.6",
     "react-pose": "^4.0.8",
@@ -14,7 +15,7 @@
   "scripts": {
     "tailwind:css": "tailwind build src/css/tailwind.src.css -c  tailwind.js -o src/css/tailwind.css",
     "tailwind:purge": "purgecss --css src/css/tailwind.css --out src/css/ --content src/**/*.js",
-    "start": "yarn tailwind:css && 'react-scripts start'",
+    "start": "yarn tailwind:css && react-scripts start",
     "build": "yarn tailwind:css && react-scripts build",
     "lint": "eslint",
     "test": "react-scripts test",

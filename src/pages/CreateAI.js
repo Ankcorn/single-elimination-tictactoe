@@ -3,13 +3,11 @@ import React, { useState } from 'react';
 import Board from '../components/Board';
 import Square from '../components/Square';
 import UserAI from '../components/UserAI';
-import Controls from '../components/Controls';
-import useTicTacToe from '../hooks/tictactoe';
 import useInterval from '../hooks/interval';
 import logic from '../ai/logic';
 
 
-function Create() {
+function Create({ ai }) {
   const game = [0, 0, 0, 0, 0, 0, 0, 0, 0];
   let player = 1;
   const winConditions = [
@@ -34,7 +32,7 @@ function Create() {
   }
   function nextMove(position) {
     game[position] = player;
-    console.log(game);
+    setBoard(game);
   }
   const id = useInterval(() => {
     if (checkWin()) {
@@ -48,11 +46,9 @@ function Create() {
         if (player === 1) {
           nextMove(logic(game));
           player *= -1;
-          setBoard(game);
         } else {
           // eslint-disable-next-line no-eval
           nextMove(eval(playerAI));
-          setBoard(game);
         }
       } catch (e) {
         console.log(e.message);
@@ -66,8 +62,8 @@ function Create() {
 
   return (
     <div className="flex flex-col sm:flex-row">
-      <div className="flex flex-col sm:flex-row justify-around items-center w-full h-full sm:h-screen bg-gray-200 ">
-        <UserAI code={playerAI} onCodeChange={setPlayerAI} />
+      <div className="flex flex-col sm:flex-row justify-around items-center w-full h-full sm:h-screen ">
+        <UserAI ai={ai} code={playerAI} onCodeChange={setPlayerAI} />
         <Board error={error}>
           {board.map((piece, i) => (
             <Square
@@ -79,14 +75,6 @@ function Create() {
             />
           ))}
         </Board>
-        {/* <Controls
-          paused={paused}
-          winners={winners}
-          setPaused={setPaused}
-          setWinner={setWinner}
-          resetGame={() => { game = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; }}
-          setAI2={setAI2}
-        /> */}
       </div>
     </div>
   );

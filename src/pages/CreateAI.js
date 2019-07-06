@@ -7,51 +7,69 @@ import Controls from '../components/Controls';
 import useTicTacToe from '../hooks/tictactoe';
 import useInterval from '../hooks/interval';
 import logic from '../ai/logic';
-import Leader from '../components/Leader';
 
 
 function Create() {
-  const [game, player, nextMove, resetGame, useWinner] = useTicTacToe();
-  const [winners, setWinner] = useState({ p1: 0, p2: 0 });
-  const [ai2, setAI2] = useState('game.indexOf(0)');
-  const [panelOpen, setPanel] = useState(false);
+  const game = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+  let player = 1;
+  const winConditions = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8],
+    [0, 3, 6], [1, 4, 7], [2, 5, 8],
+    [0, 4, 8], [2, 4, 6],
+  ];
+  const [board, setBoard] = useState(game);
+  const [playerAI, setPlayerAI] = useState('game.indexOf(0)');
   const [paused, setPaused] = useState(false);
   const [error, setError] = useState(undefined);
 
-  useWinner((winner) => {
-    if (winner !== '0') {
-      setWinner(winner === -1
-        ? { ...winners, p1: winners.p1 + 1 }
-        : { ...winners, p2: winners.p2 + 1 });
+  function checkWin() {
+    const isWin = winConditions.find(
+      el => game[el[0]] === game[el[1]]
+      && game[el[1]] === game[el[2]]
+      && game[el[0]] !== 0
+      && game[el[1]] !== 0
+      && game[el[3]] !== 0,
+    );
+    return isWin;
+  }
+  function nextMove(position) {
+    game[position] = player;
+    console.log(game);
+  }
+  const id = useInterval(() => {
+    if (checkWin()) {
+      setPaused(true);
+      console.log('winner is', player);
+      clearInterval(id);
     }
-  }, game);
-
-  useInterval(() => {
     if (paused === false) {
       setError(undefined);
       try {
         if (player === 1) {
           nextMove(logic(game));
+          player *= -1;
+          setBoard(game);
         } else {
           // eslint-disable-next-line no-eval
-          nextMove(eval(ai2));
+          nextMove(eval(playerAI));
+          setBoard(game);
         }
       } catch (e) {
+        console.log(e.message);
         setError(e.message);
-        setPaused(!paused);
-        setWinner({ p1: 0, p2: 0 });
-        resetGame();
+        setPaused(true);
+        // setWinner({ p1: 0, p2: 0 });
+        // resetGame();
       }
     }
-  }, 50);
+  }, 1000);
 
   return (
     <div className="flex flex-col sm:flex-row">
-      <Leader open={panelOpen} toggle={() => setPanel(!panelOpen)} />
       <div className="flex flex-col sm:flex-row justify-around items-center w-full h-full sm:h-screen bg-gray-200 ">
-        <UserAI code={ai2} onCodeChange={setAI2} />
+        <UserAI code={playerAI} onCodeChange={setPlayerAI} />
         <Board error={error}>
-          {game.map((piece, i) => (
+          {board.map((piece, i) => (
             <Square
               error={error}
               key={i}
@@ -61,14 +79,14 @@ function Create() {
             />
           ))}
         </Board>
-        <Controls
+        {/* <Controls
           paused={paused}
           winners={winners}
           setPaused={setPaused}
           setWinner={setWinner}
-          resetGame={resetGame}
+          resetGame={() => { game = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]; }}
           setAI2={setAI2}
-        />
+        /> */}
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
-
+  const id = useRef;
   // Remember the latest callback.
   useEffect(() => {
     savedCallback.current = callback;
@@ -15,11 +15,12 @@ function useInterval(callback, delay) {
       savedCallback.current();
     }
     if (delay !== null) {
-      const id = setInterval(tick, delay);
+      id.current = setInterval(tick, delay);
       return () => clearInterval(id);
     }
     throw new Error('delay must not be null');
-  }, [delay]);
+  }, [delay, id]);
+  return id.current;
 }
 
 export default useInterval;

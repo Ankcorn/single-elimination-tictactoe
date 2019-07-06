@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 
 function useTicTacToe() {
-  const initialState = Array(9).fill(0);
+  const initialState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
   const initialPlayer = 1;
   const [lastPlayer, setLastPlayer] = useState(initialPlayer);
 
@@ -26,22 +26,7 @@ function useTicTacToe() {
     setGame([...game].map((el, i) => (i === position ? player : el)));
   }
 
-  function useWinner(callback, gameState) {
-    useEffect(() => {
-      const isWin = winConditions.find(
-        el => gameState[el[0]] === gameState[el[1]]
-        && gameState[el[1]] === gameState[el[2]]
-        && gameState[el[0]] !== 0
-        && gameState[el[1]] !== 0
-        && gameState[el[3]] !== 0,
-      );
-      if (isWin || !gameState.includes(0)) {
-        resetGame();
-        callback(isWin ? player : '0');
-      }
-    }, [gameState, callback]);
-  }
-  return [game, player, nextMove, resetGame, useWinner];
+  return [game, player, nextMove, resetGame, winConditions];
 }
 
 export default useTicTacToe;

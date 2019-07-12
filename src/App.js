@@ -8,7 +8,7 @@ import {
 import Header from './components/Header';
 import Home from './pages/Tournaments';
 import Create from './pages/CreateAI';
-
+import Battle from './pages/Battle';
 
 const client = Stitch.initializeDefaultAppClient('aivsai-cjsto');
 const db = client.getServiceClient(RemoteMongoClient.factory, 'mongodb-atlas').db('vs');
@@ -27,6 +27,7 @@ function App() {
       <Router>
         <Home path="/" />
         <Create path="/create" ai={ai} />
+        <Battle path="/battle" ai={ai} />
       </Router>
     </div>
   );

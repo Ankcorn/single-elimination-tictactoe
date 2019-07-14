@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-eval */
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import Board from '../components/Board';
@@ -54,7 +56,12 @@ function Battle({ ai }) {
   const [winner, setWinner] = useState(0);
   const [turns, setNumberOfTurns] = useState(0);
   const [draw, setDraw] = useState(false);
-  const reset = () => { setBoard([0, 0, 0, 0, 0, 0, 0, 0, 0]); setWinner(0); setNumberOfTurns(0); setPlayer(initPlayer * -1); setInitPlayer(initPlayer * -1); };
+  const reset = () => {
+    setBoard([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    setWinner(0); setNumberOfTurns(0);
+    setPlayer(initPlayer * -1);
+    setInitPlayer(initPlayer * -1);
+  };
 
   const ai1 = ais && playerOne && (game => eval(ais.find(el => el.name === playerOne).code));
   const ai2 = ais && playerTwo && (game => eval(ais.find(el => el.name === playerTwo).code));

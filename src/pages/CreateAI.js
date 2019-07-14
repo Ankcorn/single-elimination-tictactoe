@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-eval */
 import React, { useState } from 'react';
 import UserAI from '../components/UserAI';
-import useInterval from '../hooks/interval';
 import logic from '../ai/logic';
 import TicTocToe from '../components/TicTacToe';
 

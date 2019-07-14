@@ -1,5 +1,5 @@
 /* eslint-disable no-nested-ternary */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Board from './Board';
 import Square from './Square';
 
@@ -26,6 +26,12 @@ function TicTacToe({ ai1, ai2 }) {
   const [winner, setWinner] = useState(0);
   const [turns, setnumberOfTurns] = useState(0);
 
+  useEffect(() => {
+    if (checkWin(winConditions, board)) {
+      setWinner(board[checkWin(winConditions, board)[0]]);
+    }
+  }, [board]);
+
   function nextMove(position) {
     setBoard(board.map((piece, i) => {
       if (i === position) {
@@ -47,15 +53,12 @@ function TicTacToe({ ai1, ai2 }) {
         nextMove(ai2(board));
       }
     }
-    if (checkWin(winConditions, board)) {
-      setWinner(board[checkWin(winConditions, board)[0]]);
-    }
   }
   const reset = () => { setBoard([0, 0, 0, 0, 0, 0, 0, 0, 0]); setWinner(0); setnumberOfTurns(0); };
   return (
     <div className="flex flex-col items-center">
-      <button onClick={winner === 0 ? run : reset} className="flex bg-blue-500 m-5 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded mr-3" type="button">
-        {winner === 0 ? turns > 0 ? 'Next Turn' : 'Test your AI' : `The winner is ${winner === 1 ? 'Computer' : 'You'} Click to RESET`}
+      <button onClick={winner === 0 ? run : reset} className={`flex ${winner ? winner === 1 ? 'bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700' : 'bg-green-600 hover:bg-green-700 border-green-600 hover:border-green-700' : 'bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700'}  m-5  text-sm border-4 text-white py-1 px-2 rounded mr-3`} type="button">
+        {winner === 0 ? turns > 0 ? 'Next Turn' : 'Test your AI' : `The Winner is ${winner === 1 ? 'Computer' : 'You'} click to RESET`}
       </button>
       <Board error={false}>
         {board.map((piece, i) => (
@@ -64,7 +67,6 @@ function TicTacToe({ ai1, ai2 }) {
             key={i}
             position={i}
             value={piece}
-            onClick={() => nextMove(i)}
           />
         ))}
       </Board>

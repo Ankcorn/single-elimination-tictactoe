@@ -118,10 +118,10 @@ function Battle({ ai }) {
     if (started && (playerOneWins + playerTwoWins) <= 49) {
       run();
     } else if ((playerOneWins + playerTwoWins) >= 50) {
-      if (playerOneWins > 10) {
+      if (playerOneWins > 25) {
         setWinner(playerOne);
       }
-      if (playerTwoWins > 10) {
+      if (playerTwoWins > 25) {
         setWinner(playerTwo);
       }
       if (playerOneWins === playerTwoWins) {

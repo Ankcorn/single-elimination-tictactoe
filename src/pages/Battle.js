@@ -115,9 +115,9 @@ function Battle({ ai }) {
     }
   }
   const id = useInterval(() => {
-    if (started && (playerOneWins + playerTwoWins) <= 19) {
+    if (started && (playerOneWins + playerTwoWins) <= 49) {
       run();
-    } else if ((playerOneWins + playerTwoWins) >= 20) {
+    } else if ((playerOneWins + playerTwoWins) >= 50) {
       if (playerOneWins > 10) {
         setWinner(playerOne);
       }

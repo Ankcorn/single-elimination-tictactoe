@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 import Board from './Board';
@@ -21,6 +22,7 @@ function checkWin(winningCombinations, gameState) {
 }
 
 function TicTacToe({ ai1, ai2 }) {
+  const [toggle, togglePlayer] = useState(false);
   const [board, setBoard] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0]);
   const [player, setPlayer] = useState(-1);
   const [winner, setWinner] = useState(0);
@@ -46,17 +48,41 @@ function TicTacToe({ ai1, ai2 }) {
     setnumberOfTurns(turns + 1);
     if (!checkWin(winConditions, board)) {
       if (player === -1) {
+        console.log('player 1');
         nextMove(ai1(board));
       }
 
       if (player === 1) {
+        console.log('player 2');
         nextMove(ai2(board));
       }
     }
   }
-  const reset = () => { setBoard([0, 0, 0, 0, 0, 0, 0, 0, 0]); setWinner(0); setnumberOfTurns(0); };
+
+  function changePlayer() {
+    console.log('clicked');
+    togglePlayer(!toggle);
+    if (toggle === false) {
+      setPlayer(1);
+    } else {
+      setPlayer(-1);
+    }
+  }
+  const reset = () => {
+    setBoard([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    setWinner(0);
+    setnumberOfTurns(0);
+    setPlayer(-1);
+    togglePlayer(false);
+  };
   return (
     <div className="flex flex-col items-center">
+      {turns === 0 && (
+      <button onClick={changePlayer} className={`flex ${winner ? winner === 1 ? 'bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700' : 'bg-green-600 hover:bg-green-700 border-green-600 hover:border-green-700' : 'bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700'}  m-5  text-sm border-4 text-white py-1 px-2 rounded mr-3`} type="button">
+        {!toggle ? 'You are first - Click to change' : 'The AI is first - Click to change'}
+      </button>
+      )}
+
       <button onClick={winner === 0 ? run : reset} className={`flex ${winner ? winner === 1 ? 'bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700' : 'bg-green-600 hover:bg-green-700 border-green-600 hover:border-green-700' : 'bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700'}  m-5  text-sm border-4 text-white py-1 px-2 rounded mr-3`} type="button">
         {winner === 0 ? turns > 0 ? 'Next Turn' : 'Test your AI' : `The Winner is ${winner === 1 ? 'Computer' : 'You'} click to RESET`}
       </button>

@@ -7,7 +7,12 @@ import TicTocToe from '../components/TicTacToe';
 
 
 function Create({ ai }) {
-  const [playerAI, setPlayerAI] = useState('game.indexOf(0)');
+  const [playerAI, setPlayerAI] = useState(`
+  function play(board) {
+    return board.indexOf(0);
+  }
+  
+  play(game);`);
 
   return (
     <div className="flex flex-col sm:flex-row">

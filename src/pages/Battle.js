@@ -56,6 +56,7 @@ function Battle({ ai }) {
   const [winner, setWinner] = useState(0);
   const [turns, setNumberOfTurns] = useState(0);
   const [draw, setDraw] = useState(false);
+  const [error, setError] = useState(undefined);
   const reset = () => {
     setBoard([0, 0, 0, 0, 0, 0, 0, 0, 0]);
     setWinner(0); setNumberOfTurns(0);
@@ -81,13 +82,19 @@ function Battle({ ai }) {
   }, [board]);
 
   function nextMove(position) {
-    setBoard(board.map((piece, i) => {
-      if (i === position) {
-        return player;
-      }
-      return piece;
-    }));
-    setPlayer(player * -1);
+    if (board[position] !== 0) {
+      setError('No Cheating! Your AI Went in a space that was already taken.');
+      reset();
+    } else {
+      setError(undefined);
+      setBoard(board.map((piece, i) => {
+        if (i === position) {
+          return player;
+        }
+        return piece;
+      }));
+      setPlayer(player * -1);
+    }
   }
 
   function run() {
@@ -151,10 +158,10 @@ function Battle({ ai }) {
         >
           {draw ? 'Oh No! It\'s a draw. Lets Try Again' : (!playerOne || !playerTwo) ? 'Select your players' : !locked ? 'Lock The Players' : !started ? 'Start' : !winner ? 'Running' : `${winner} is the Winner`}
         </button>
-        <Board error={false}>
+        <Board error={error}>
           {board.map((piece, i) => (
             <Square
-              error={false}
+              error={error}
               key={i}
               position={i}
               value={piece}

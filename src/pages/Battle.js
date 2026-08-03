@@ -37,9 +37,12 @@ function Battle({ ai }) {
 
   async function fetchAIs() {
     if (ai) {
-      const results = await ai.find().asArray();
-      console.log({ results });
-      setAIs(results);
+      try {
+        const results = await ai.find().asArray();
+        setAIs(results);
+      } catch (err) {
+        console.error('Failed to fetch AIs from database:', err);
+      }
     }
   }
 

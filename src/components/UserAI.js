@@ -20,6 +20,7 @@ function UserAI({ code, onCodeChange, ai }) {
       });
       return setSuccess('Success');
     } catch (e) {
+      console.error('Failed to save AI:', e);
       if (e.errorCode === 11) {
         return setError('Duplicate Name');
       }

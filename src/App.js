@@ -19,6 +19,8 @@ function App() {
   useEffect(() => {
     client.auth.loginWithCredential(new AnonymousCredential()).then(() => {
       setAI(db.collection('ai'));
+    }).catch((err) => {
+      console.error('Failed to authenticate with MongoDB Stitch:', err);
     });
   }, []);
   return (
